@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radio Rolines</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    #player-container {
-      margin-top: 50px;
-    }
-    #now-playing {
-      font-size: 1.5em;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Rolines</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Bienvenidos a la Radio Oficial de Roquinia</h1>
-  <div id="player-container">
-    <audio id="audio-player" controls autoplay></audio>
-    <p id="now-playing">Cargando...</p>
-  </div>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Radio Rolines Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#programas">Programas</a></li>
+                <li><a href="#noticias">Noticias</a></li>
+                <li><a href="#redes">Redes Sociales</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <script>
-    async function loadPlaylist() {
-      const response = await fetch('playlist.json');
-      return await response.json();
-    }
+    <section id="programas">
+        <h2>Programas en Vivo</h2>
+        <div class="programa">
+            <p>Escucha nuestros programas en vivo aquí:</p>
+            <audio controls>
+                <source src="streaming.mp3" type="audio/mp3">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </section>
 
-    async function startRadio() {
-      const playlist = await loadPlaylist();
-      const audioPl
+    <section id="noticias">
+        <h2>Últimas Noticias</h2>
+        <article>
+            <h3>Noticia importante</h3>
+            <p>Detalles de la noticia...</p>
+        </article>
+    </section>
+
+    <section id="redes">
+        <h2>Síguenos en redes sociales</h2>
+        <a href="https://facebook.com/RadioRolines">Facebook</a>
+        <a href="https://twitter.com/RadioRolines">Twitter</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Radio Rolines</p>
+    </footer>
+</body>
+</html>
