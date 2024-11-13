@@ -24,8 +24,8 @@
         <h2>Programas en Vivo</h2>
         <div class="programa">
             <p>Escucha nuestros programas en vivo aquí:</p>
-            <audio controls>
-                <source src="streaming.mp3" type="audio/mp3">
+            <audio id="player" controls autoplay>
+                <source id="audioSource" type="audio/mp3">
                 Tu navegador no soporta el elemento de audio.
             </audio>
         </div>
@@ -48,5 +48,33 @@
     <footer>
         <p>&copy; 2024 Radio Rolines</p>
     </footer>
+
+    <script>
+        fetch('canciones.json')
+            .then(response => response.json())
+            .then(data => {
+                const audioPlayer = document.getElementById('player');
+                const audioSource = document.getElementById('audioSource');
+                let canciones = data.canciones;
+                let indice = 0;
+
+                function cargarCancion() {
+                    audioSource.src = canciones[indice];
+                    audioPlayer.load();
+                    audioPlayer.play();
+                    indice = (indice + 1) % canciones.length;
+                }
+
+                cargarCancion();
+                audioPlayer.onended = function() {
+                    cargarCancion();
+                };
+
+                audioPlayer.onseeked = function() {
+                    audioPlayer.currentTime = 0;
+                };
+            })
+            .catch(error => console.error('Error al cargar el JSON:', error));
+    </script>
 </body>
 </html>
