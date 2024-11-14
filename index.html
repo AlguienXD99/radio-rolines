@@ -24,7 +24,7 @@
         <h2>Programas en Vivo</h2>
         <div class="programa">
             <p>Escucha nuestros programas en vivo aquí:</p>
-            <audio id="player" controls autoplay>
+            <audio id="player" controls autoplay loop>
                 <source id="audioSource" type="audio/mp3">
                 Tu navegador no soporta el elemento de audio.
             </audio>
@@ -50,31 +50,26 @@
     </footer>
 
     <script>
-        fetch('audios.json')
-            .then(response => response.json())
-            .then(data => {
-                const audioPlayer = document.getElementById('player');
-                const audioSource = document.getElementById('audioSource');
-                let canciones = data.canciones;
-                let indice = 0;
+        const audios = [
+            "audio1.mp3", 
+            "audio2.mp3", 
+            "audio3.mp3"
+        ];
+        const audioPlayer = document.getElementById('player');
+        const audioSource = document.getElementById('audioSource');
+        let indice = 0;
 
-                function cargarCancion() {
-                    audioSource.src = canciones[indice];
-                    audioPlayer.load();
-                    audioPlayer.play();
-                    indice = (indice + 1) % canciones.length;
-                }
+        function cargarAudio() {
+            audioSource.src = audios[indice];
+            audioPlayer.load();
+            audioPlayer.play();
+            indice = (indice + 1) % audios.length; // Vuelve al primer audio cuando termina el último
+        }
 
-                cargarCancion();
-                audioPlayer.onended = function() {
-                    cargarCancion();
-                };
-
-                audioPlayer.onseeked = function() {
-                    audioPlayer.currentTime = 0;
-                };
-            })
-            .catch(error => console.error('Error al cargar el JSON:', error));
+        cargarAudio();
+        audioPlayer.onended = function() {
+            cargarAudio();
+        };
     </script>
 </body>
 </html>
