@@ -6,17 +6,31 @@
     <title>Radio Rolines</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        .audio-container {
+            position: relative;
+            width: 100%;
+            height: 60px;
+        }
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 10;
+            pointer-events: none;
+        }
         .logo img {
-            width: 300px; /* Ajusta a tu tamaño preferido */
+            width: 250px;
             height: auto;
-            max-width: 100%;
         }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="logo.png" alt="Radio Rolines Logo" class="logo-img">
+            <img src="logo.png" alt="Radio Rolines Logo">
         </div>
         <nav>
             <ul>
@@ -31,7 +45,7 @@
     <section id="programas">
         <h2>Programas en Vivo</h2>
         <div class="audio-container">
-            <div class="cover"></div> <!-- Cubre solo la barra de progreso -->
+            <div class="cover"></div>
             <audio id="player" controls autoplay>
                 <source id="audioSource" type="audio/mp3">
                 Tu navegador no soporta el elemento de audio.
