@@ -11,15 +11,15 @@
             width: 100%;
             height: 60px; /* Ajusta la altura según el tamaño del reproductor */
         }
-
         .cover {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
+            height: 8px; /* Cubre solo la barra de progreso */
             background-color: rgba(255, 255, 255, 0.7); /* Color blanco con transparencia */
             z-index: 10; /* Asegura que el cover esté sobre el reproductor */
+            pointer-events: none; /* Evita que bloquee interacciones con el botón play */
         }
     </style>
 </head>
@@ -39,15 +39,12 @@
 
     <section id="programas">
         <h2>Programas en Vivo</h2>
-        <div class="programa">
-            <p>Escucha nuestros programas en vivo aquí:</p>
-            <div class="audio-container">
-                <audio id="player" controls autoplay>
-                    <source id="audioSource" type="audio/mp3">
-                    Tu navegador no soporta el elemento de audio.
-                </audio>
-                <div class="cover"></div>
-            </div>
+        <div class="audio-container">
+            <div class="cover"></div> <!-- Cubre solo la barra de progreso -->
+            <audio id="player" controls autoplay>
+                <source id="audioSource" type="audio/mp3">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
         </div>
     </section>
 
@@ -70,31 +67,31 @@
     </footer>
 
     <script>
-        let audios = [
-            'audio1.mp3', 
-            'audio2.mp3',
-            'audio3.mp3'
-        ];
-        let indice = 0;
+        fetch('audios.json')
+            .then(response => response.json())
+            .then(data => {
+                const audioPlayer = document.getElementById('player');
+                const audioSource = document.getElementById('audioSource');
+                let audios = data.audios;
+                let indice = 0;
 
-        const audioPlayer = document.getElementById('player');
-        const audioSource = document.getElementById('audioSource');
+                function cargarAudio() {
+                    audioSource.src = audios[indice];
+                    audioPlayer.load();
+                    audioPlayer.play();
+                    indice = (indice + 1) % audios.length;
+                }
 
-        function cargarAudio() {
-            audioSource.src = audios[indice];
-            audioPlayer.load();
-            audioPlayer.play();
-            indice = (indice + 1) % audios.length;
-        }
+                cargarAudio();
+                audioPlayer.onended = function() {
+                    cargarAudio();
+                };
 
-        cargarAudio();
-        audioPlayer.onended = function() {
-            cargarAudio();
-        };
-
-        audioPlayer.onseeked = function() {
-            audioPlayer.currentTime = 0;
-        };
+                audioPlayer.onseeked = function() {
+                    audioPlayer.currentTime = 0;
+                };
+            })
+            .catch(error => console.error('Error al cargar el JSON:', error));
     </script>
 </body>
 </html>
